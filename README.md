@@ -270,3 +270,6 @@ Setiap endpoint perlu diuji untuk memastikan respons dan perubahan database sesu
 ## Kesimpulan
 
 API Peminjaman Buku merupakan implementasi REST API menggunakan Node.js dan Express.js dengan Supabase sebagai database serta Vercel sebagai platform deployment. API dirancang untuk mendukung pengelolaan data peminjaman buku melalui operasi CRUD dan filter berdasarkan status.
+
+## Deployment Vercel
+https://responsi-ppb-klsi-5njsgnucm-bwlfsl.vercel.app
