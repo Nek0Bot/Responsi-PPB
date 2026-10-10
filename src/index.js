@@ -50,40 +50,37 @@ app.get('/', (req, res) => {
 });
 
 // READ: semua data dan filter status
-app.get('/loans', async (req, res) => {
+app.get("/loans", async (req, res) => {
   try {
-    let query = supabase
-      .from('loans')
-      .select('*')
-      .order('id', { ascending: true });
-
     const { status } = req.query;
 
-    if (status) {
-      if (
-        typeof status !== 'string' ||
-        !validStatuses.includes(status)
-      ) {
-        return res.status(400).json({
-          error: 'Status tidak valid.',
-          valid_statuses: validStatuses
-        });
-      }
+    let query = supabase
+      .from("loans")
+      .select("*")
+      .order("id", { ascending: true });
 
-      query = query.eq('status', status);
+    if (status) {
+      query = query.eq("status", status);
     }
 
     const { data, error } = await query;
 
-    if (error) throw error;
+    if (error) {
+      console.error("Gagal mengambil data loans:", error);
+      return res.status(500).json({
+        message: "Gagal mengambil data peminjaman",
+        error: error.message,
+      });
+    }
 
-    return res.json({
-      message: 'Data peminjaman berhasil diambil.',
-      total: data.length,
-      data
+    return res.status(200).json(data);
+  } catch (err) {
+    console.error("Error GET /loans:", err);
+
+    return res.status(500).json({
+      message: "Terjadi kesalahan pada server",
+      error: err.message,
     });
-  } catch (error) {
-    return res.status(500).json({ error: error.message });
   }
 });
 
